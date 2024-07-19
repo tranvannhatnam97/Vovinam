@@ -1,16 +1,13 @@
 {
   "dependencies": {
     "@biomejs/biome": "^1.8.3",
-    "@cucumber/cucumber": "^10.8.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.3"
   },
   "devDependencies": {
-    "@types/cucumber": "^7.0.0",
-    "cucumber": "^6.0.7"
+    "tsconfig-paths": "^4.2.0"
   },
   "scripts": {
-    "biome": "biome",
-    "test": "cucumber-js"
+    "biome": "biome"
   }
 }

@@ -1,20 +1,12 @@
 {
-    "compilerOptions": {
-      "module": "commonjs",
-      "target": "es6",
-      "noImplicitAny": false,
-      "moduleResolution": "node",
-      "sourceMap": true,
-      "outDir": "out",
-      "baseUrl": ".",
-      "paths": {
-        "*": [
-          "node_modules/*"
-        ]
-      },
-      "typeRoots" : ["./node_modules/@types", "./types"]
-    },
-    "include": [
-      "src/**/*"
-    ]
-  }
+	"compilerOptions": {
+		"forceConsistentCasingInFileNames": true,
+		"baseUrl": ".",
+		"strict": true,
+		"esModuleInterop": true,
+		"experimentalDecorators": true
+	},
+	"ts-node": {
+		"require": ["tsconfig-paths/register"]
+	}
+}
