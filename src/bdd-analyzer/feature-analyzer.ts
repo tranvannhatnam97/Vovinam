@@ -6,6 +6,14 @@ export class Feature {
 	private scenarios: Scenario[] = [];
 	private text: string;
 	private name = "";
+	private static keywords = [
+		"Scenario:",
+		"Scenario Outline:",
+		"BeforeAll:",
+		"BeforeEach:",
+		"AfterAll:",
+		"AfterEach:",
+	];
 	constructor(text: string) {
 		this.text = text;
 		this.loadFeatureName();
@@ -26,14 +34,7 @@ export class Feature {
 		return this.name;
 	}
 	getScenariosText() {
-		return divideTextToParagraphsStartWithKeyWords(this.text, [
-			"Scenario:",
-			"Scenario Outline:",
-			"BeforeAll:",
-			"BeforeEach:",
-			"AfterAll:",
-			"AfterEach:",
-		]);
+		return divideTextToParagraphsStartWithKeyWords(this.text, Feature.keywords);
 	}
 	loadScenarios() {
 		const scenariosText = this.getScenariosText();
@@ -49,12 +50,23 @@ export class Feature {
 class Scenario {
 	private steps: Step[];
 	private text: string;
+	private static keywords = ["Given", "When", "Then", "And", "But"];
 	constructor(text: string) {
 		this.steps = [];
 		this.text = text;
+		this.loadSteps();
 	}
 	getText(): string {
 		return this.text;
+	}
+	loadSteps() {
+		return divideTextToParagraphsStartWithKeyWords(
+			this.text,
+			Scenario.keywords,
+		);
+	}
+	getSteps(): Step[] {
+		return this.steps;
 	}
 }
 
@@ -64,8 +76,11 @@ class AfterAll extends Scenario {}
 class AfterEach extends Scenario {}
 
 class Step {
-	private line: string;
-	constructor(line: string) {
-		this.line = line;
+	private text: string;
+	constructor(text: string) {
+		this.text = text;
+	}
+	getText(): string {
+		return this.text;
 	}
 }

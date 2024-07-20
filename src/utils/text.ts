@@ -13,11 +13,20 @@ function getLinesFromArrayContainingWord(
 ): string[] {
 	return lines.filter((line) => line.split(" ").includes(word));
 }
+function removeCommentLines(lines: string[]): string[] {
+	return lines.filter((line) => !line.trim().startsWith("#"));
+}
+function removeEmptyLines(lines: string[]): string[] {
+	return lines.filter((line) => line.trim() !== "");
+}
 function getLinesFromArrayStartWithWord(
 	lines: string[],
 	word: string,
 ): string[] {
 	return lines.filter((line) => line.trim().startsWith(word));
+}
+export function isEmptyLine(line: string): boolean {
+	return line.trim().replace("\t", "") === "";
 }
 export function getLinesContainsWord(
 	originalText: string,
@@ -37,7 +46,7 @@ export function divideTextToParagraphsStartWithKeyWords(
 	text: string,
 	word: string[],
 ): string[] {
-	const lines = divideTextIntoLines(text);
+	const lines = removeEmptyLines(removeCommentLines(divideTextIntoLines(text)));
 	const paragraphs: string[] = [];
 	let paragraph = "";
 	for (const line of lines) {
@@ -45,10 +54,15 @@ export function divideTextToParagraphsStartWithKeyWords(
 		if (word.some((w) => _line.startsWith(w))) {
 			if (paragraph !== "") {
 				paragraphs.push(paragraph);
+				paragraph = "";
 			}
 			paragraph = line;
+		} else if (isEmptyLine(_line)) {
 		} else {
 			paragraph += `\n${_line}`;
+			if (Array.from(lines).indexOf(line) === lines.length - 1) {
+				paragraphs.push(paragraph);
+			}
 		}
 	}
 	return paragraphs;

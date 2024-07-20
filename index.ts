@@ -5,5 +5,7 @@ const feature = new Feature(featureText);
 // console.log(feature.getName());
 const scenarios = feature.getScenarios();
 for (const scenario of scenarios) {
-	console.log(`Scenario: ${scenario.getText()}`);
+	console.log(`${scenario.getText()}`);
 }
+// const step = scenarios[1].getSteps()[2];
+// console.log(step.getText());
